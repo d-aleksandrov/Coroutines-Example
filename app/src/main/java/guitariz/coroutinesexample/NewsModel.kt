@@ -1,6 +1,6 @@
 package guitariz.coroutinesexample
 
-import android.arch.persistence.room.Entity
+import androidx.room.Entity
 
 @Entity
 class NewsModel{

@@ -1,10 +1,9 @@
 package guitariz.coroutinesexample.modules
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
 import guitariz.coroutinesexample.NewsModel
-import kotlin.coroutines.suspendCoroutine
 
 @Dao
 interface NewsDao {
@@ -13,4 +12,10 @@ interface NewsDao {
 
     @Insert
     fun save(models: List<NewsModel>)
+
+    @Query("SELECT * from NewsModel ORDER BY id DESC LIMIT 1")
+    suspend fun lastElementAsync(): List<NewsModel>
+
+    @Insert
+    suspend fun saveAsync(models: List<NewsModel>)
 }

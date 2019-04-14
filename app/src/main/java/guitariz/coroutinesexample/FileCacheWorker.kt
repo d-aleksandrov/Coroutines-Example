@@ -32,7 +32,7 @@ class FileCacheWorker(
                         ?: return listener.onError(Throwable("cannot parse news load results"))
 
                 if (loadedNews.isEmpty())
-                    return listener.onSuccess()
+                    return listener.onSuccess(null)
 
                 processLoadedNews(loadedNews)
             }
@@ -74,7 +74,7 @@ class FileCacheWorker(
             }
 
             error?.let(listener::onError)
-                    ?: listener.onSuccess()
+                    ?: listener.onSuccess(null)
         }
     }
 }
