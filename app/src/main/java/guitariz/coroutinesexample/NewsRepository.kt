@@ -8,8 +8,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 interface NewsCacheListener {
-    fun onSuccess(techMessage:String?)
-    fun onError(error: Throwable)
+    fun onSuccess(techMessage: String?)
+    fun onError(error: String)
     fun onProgress(percent: Int)
 }
 
@@ -19,45 +19,39 @@ class NewsRepository {
     private val fileStorage: FileStorageService = TODO()
 
     fun cacheNews(listener: NewsCacheListener) = FileCacheWorker(
-            network = network,
-            database = database,
-            fileStorage = fileStorage,
-            listener = listener
+        network = network,
+        database = database,
+        fileStorage = fileStorage,
+        listener = listener
     )
 
     fun cacheNewsCoroutine(listener: NewsCacheListener) = GlobalScope.launch {
-        val lastID = database.lastElement().firstOrNull()?.id
-                ?: return@launch listener.onError(Throwable("do not have last news id"))
+        val lastID = database.lastElementAsync().firstOrNull()?.id
+            ?: return@launch listener.onError("do not have last news id")
 
         val loadedNews = network.loadNewsAsync(lastID).await()
         val newsArray = loadedNews.body()
-
-        if (newsArray == null) {
-            val message = loadedNews.errorBody()?.string() ?: "Bad load results "
-            return@launch listener.onError(Throwable(message))
-        }
+            ?: return@launch listener.onError(loadedNews.errorBody()?.string() ?: "Bad load results ")
 
         val fileUrls = newsArray.mapNotNull(NewsModel::attachments).flatten()
-        val fileErrorStrings:List<String> = fileUrls.mapNotNull { fileUrl ->
+        val fileErrorStrings: List<String> = fileUrls.mapNotNull { fileUrl ->
             val fileResponse = network.downloadFileAsync(fileUrl).await()
             val byteArray = fileResponse.body()?.bytes()
-            if (byteArray == null) {
+            if (byteArray == null)
                 fileResponse.errorBody()?.string() ?: "file $fileUrl is empty"
-            } else {
+            else
                 fileStorage.storeAsync(byteArray, fileUrl)?.message
-            }
         }
 
         try {
             database.saveAsync(newsArray)
-        } catch (e:Throwable){
-            return@launch listener.onError(e)
+        } catch (e: Throwable) {
+            return@launch listener.onError(e.localizedMessage)
         }
 
-        if(fileErrorStrings.isEmpty()){
+        if (fileErrorStrings.isEmpty())
             listener.onSuccess(null)
-        } else{
-            listener.onSuccess(fileErrorStrings.joinToString (","))
-        }
+        else
+            listener.onSuccess(fileErrorStrings.joinToString(","))
     }
 }

@@ -1,0 +1,103 @@
+package guitariz.coroutinesexample.modules;
+
+import guitariz.coroutinesexample.modules.Navigation;
+import guitariz.coroutinesexample.modules.NavigationKt;
+import guitariz.coroutinesexample.modules.NewsNetwork;
+import kotlin.Metadata;
+import kotlin.ResultKt;
+import kotlin.Unit;
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.intrinsics.IntrinsicsKt;
+import kotlin.coroutines.jvm.internal.DebugMetadata;
+import kotlin.coroutines.jvm.internal.SuspendLambda;
+import kotlin.jvm.functions.Function2;
+import kotlin.jvm.internal.Intrinsics;
+import kotlinx.coroutines.CoroutineScope;
+import kotlinx.coroutines.Deferred;
+import okhttp3.ResponseBody;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import retrofit2.Response;
+
+@DebugMetadata(f="Navigation.kt", l={36, 37, 38}, i={2}, s={"L$0"}, n={"response"}, m="invokeSuspend", c="guitariz.coroutinesexample.modules.NavigationKt$SimpleUseCaseAsync$1")
+@Metadata(mv={1, 1, 15}, bv={1, 0, 3}, k=3, d1={"\u0000\u000e\n\u0000\n\u0002\u0010\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\u0010\u0000\u001a\u00020\u0001*\u00020\u0002H\u008a@\u00f8\u0001\u0000\u00a2\u0006\u0004\b\u0003\u0010\u0004"}, d2={"<anonymous>", "", "Lkotlinx/coroutines/CoroutineScope;", "invoke", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"})
+static final class NavigationKt.SimpleUseCaseAsync.1
+extends SuspendLambda
+implements Function2<CoroutineScope, Continuation<? super Unit>, Object> {
+    private CoroutineScope p$;
+    Object L$0;
+    int label;
+    final /* synthetic */ Navigation $navigation;
+    final /* synthetic */ NewsNetwork $network;
+    final /* synthetic */ String $fileUrl;
+
+    @Nullable
+    public final Object invokeSuspend(@NotNull Object result) {
+        var4_2 = IntrinsicsKt.getCOROUTINE_SUSPENDED();
+        switch (this.label) {
+            case 0: {
+                ResultKt.throwOnFailure((Object)result);
+                var2_3 = this.p$;
+                this.label = 1;
+                v0 = NavigationKt.showBlockerAsync((Navigation)this.$navigation, (Continuation)this);
+                if (v0 == var4_2) {
+                    return var4_2;
+                }
+                ** GOTO lbl14
+            }
+            case 1: {
+                ResultKt.throwOnFailure((Object)result);
+                v0 = result;
+lbl14: // 2 sources:
+                this.label = 2;
+                v1 = this.$network.downloadFileAsync(this.$fileUrl).await((Continuation)this);
+                if (v1 == var4_2) {
+                    return var4_2;
+                }
+                ** GOTO lbl22
+            }
+            case 2: {
+                ResultKt.throwOnFailure((Object)result);
+                v1 = result;
+lbl22: // 2 sources:
+                response = (Response)v1;
+                this.L$0 = response;
+                this.label = 3;
+                v2 = NavigationKt.hideBlockerAsync((Navigation)this.$navigation, (Continuation)this);
+                if (v2 == var4_2) {
+                    return var4_2;
+                }
+                ** GOTO lbl33
+            }
+            case 3: {
+                response = (Response)this.L$0;
+                ResultKt.throwOnFailure((Object)result);
+                v2 = result;
+lbl33: // 2 sources:
+                v3 = response.errorBody();
+                NavigationKt.processResults((ResponseBody)((ResponseBody)response.body()), (String)(v3 != null ? v3.string() : null));
+                return Unit.INSTANCE;
+            }
+        }
+        throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+    }
+
+    NavigationKt.SimpleUseCaseAsync.1(Navigation navigation, NewsNetwork newsNetwork, String string, Continuation continuation) {
+        this.$navigation = navigation;
+        this.$network = newsNetwork;
+        this.$fileUrl = string;
+        super(2, continuation);
+    }
+
+    @NotNull
+    public final Continuation<Unit> create(@Nullable Object value, @NotNull Continuation<?> completion) {
+        Intrinsics.checkParameterIsNotNull(completion, (String)"completion");
+        Function2<CoroutineScope, Continuation<? super Unit>, Object> function2 = new /* invalid duplicate definition of identical inner class */;
+        CoroutineScope coroutineScope = function2.p$ = (CoroutineScope)value;
+        return function2;
+    }
+
+    public final Object invoke(Object object, Object object2) {
+        return (this.create(object, (Continuation)object2)).invokeSuspend((Object)Unit.INSTANCE);
+    }
+}

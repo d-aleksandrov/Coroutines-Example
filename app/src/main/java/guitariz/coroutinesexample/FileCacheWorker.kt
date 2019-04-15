@@ -10,26 +10,29 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FileCacheWorker(
-        private val network: NewsNetwork,
-        private val database: NewsDao,
-        private val fileStorage: FileStorageService,
-        private val listener: NewsCacheListener) {
+    private val network: NewsNetwork,
+    private val database: NewsDao,
+    private val fileStorage: FileStorageService,
+    private val listener: NewsCacheListener
+) {
     init {
         doAsync {
-            val lastID: String = database.lastElement().firstOrNull()?.id
-                    ?: return@doAsync listener.onError(Throwable("do not have last news id"))
+            val lastID = database.lastElement().firstOrNull()?.id
 
-            loadNews(lastID)
+            if (lastID != null)
+                loadNews(lastID)
+            else
+                listener.onError("do not have last news id")
         }
     }
 
     private fun loadNews(lastID: String) {
         network.loadNews(lastID).enqueue(object : Callback<List<NewsModel>> {
-            override fun onFailure(call: Call<List<NewsModel>>, t: Throwable) = listener.onError(t)
+            override fun onFailure(call: Call<List<NewsModel>>, t: Throwable) = listener.onError(t.localizedMessage)
 
             override fun onResponse(call: Call<List<NewsModel>>, response: Response<List<NewsModel>>) {
                 val loadedNews = response.body()
-                        ?: return listener.onError(Throwable("cannot parse news load results"))
+                    ?: return listener.onError("cannot parse news load results")
 
                 if (loadedNews.isEmpty())
                     return listener.onSuccess(null)
@@ -42,7 +45,7 @@ class FileCacheWorker(
     private fun processLoadedNews(loadedNews: List<NewsModel>) {
         val files = loadedNews.mapNotNull(NewsModel::attachments).flatten()
         saveFiles(files) { error ->
-            error?.let(listener::onError) ?: saveModels(loadedNews)
+            error?.let { listener.onError(it.localizedMessage) } ?: saveModels(loadedNews)
         }
     }
 
@@ -55,7 +58,7 @@ class FileCacheWorker(
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 doAsync {
                     val loadedBytes = response.body()?.bytes()
-                            ?: return@doAsync callback(Throwable("File $file is empty"))
+                        ?: return@doAsync callback(Throwable("File $file is empty"))
                     fileStorage.store(loadedBytes, file) { error ->
                         error?.let(callback) ?: saveFiles(remainingFiles.minus(file), callback)
                     }
@@ -73,8 +76,10 @@ class FileCacheWorker(
                 t
             }
 
-            error?.let(listener::onError)
-                    ?: listener.onSuccess(null)
+            if (error != null)
+                listener.onError(error.localizedMessage)
+            else
+                listener.onSuccess(null)
         }
     }
 }

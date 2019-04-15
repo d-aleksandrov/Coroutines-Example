@@ -8,4 +8,6 @@ interface FileStorageService {
 }
 
 suspend fun FileStorageService.storeAsync(bytes: ByteArray, name: String)
-        : Throwable? = suspendCoroutine { continuation -> store(bytes, name, continuation::resume) }
+        : Throwable? = suspendCoroutine { continuation ->
+    store(bytes, name, continuation::resume)
+}
