@@ -1,0 +1,232 @@
+/*
+ * Decompiled with CFR 0.139.
+ * 
+ * Could not load the following classes:
+ *  android.content.Context
+ *  android.os.Bundle
+ *  android.view.View
+ *  android.view.View$OnClickListener
+ *  android.widget.Button
+ *  androidx.appcompat.app.AppCompatActivity
+ *  guitariz.coroutinesexample.MainActivity$asyncMethod
+ *  guitariz.coroutinesexample.MainActivity$asyncMethod$1
+ *  guitariz.coroutinesexample.MainActivity$coroutineMethod
+ *  guitariz.coroutinesexample.MainActivity$onCreate
+ *  guitariz.coroutinesexample.MainActivity$onCreate$1
+ *  guitariz.coroutinesexample.MainActivity$onCreate$2
+ *  guitariz.coroutinesexample.MainActivity$someWork
+ *  guitariz.coroutinesexample.MainActivity$someWork$1
+ *  guitariz.coroutinesexample.MainActivity$someWorkAsync
+ *  guitariz.coroutinesexample.MainActivity$someWorkAsync$2
+ *  guitariz.coroutinesexample.MainActivity$someWorkAsync$2$1
+ *  guitariz.coroutinesexample.R
+ *  guitariz.coroutinesexample.R$id
+ *  guitariz.coroutinesexample.navigation.Blocker
+ *  guitariz.coroutinesexample.navigation.BlockerActivity
+ *  guitariz.coroutinesexample.navigation.BlockerActivity$Companion
+ *  guitariz.coroutinesexample.navigation.Navigation
+ *  kotlin.Metadata
+ *  kotlin.Unit
+ *  kotlin.coroutines.Continuation
+ *  kotlin.coroutines.SafeContinuation
+ *  kotlin.coroutines.intrinsics.IntrinsicsKt
+ *  kotlin.coroutines.jvm.internal.DebugProbesKt
+ *  kotlin.jvm.functions.Function0
+ *  kotlin.jvm.functions.Function1
+ *  kotlin.jvm.functions.Function2
+ *  kotlin.jvm.internal.Intrinsics
+ *  kotlinx.coroutines.BuildersKt
+ *  kotlinx.coroutines.CoroutineScope
+ *  kotlinx.coroutines.GlobalScope
+ *  kotlinx.coroutines.Job
+ *  org.jetbrains.anko.AsyncKt
+ *  org.jetbrains.annotations.NotNull
+ *  org.jetbrains.annotations.Nullable
+ */
+package guitariz.coroutinesexample;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+import guitariz.coroutinesexample.MainActivity;
+import guitariz.coroutinesexample.R;
+import guitariz.coroutinesexample.navigation.Blocker;
+import guitariz.coroutinesexample.navigation.BlockerActivity;
+import guitariz.coroutinesexample.navigation.Navigation;
+import java.util.HashMap;
+import kotlin.Metadata;
+import kotlin.Unit;
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.SafeContinuation;
+import kotlin.coroutines.intrinsics.IntrinsicsKt;
+import kotlin.coroutines.jvm.internal.DebugProbesKt;
+import kotlin.jvm.functions.Function0;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.functions.Function2;
+import kotlin.jvm.internal.Intrinsics;
+import kotlinx.coroutines.BuildersKt;
+import kotlinx.coroutines.CoroutineScope;
+import kotlinx.coroutines.GlobalScope;
+import kotlinx.coroutines.Job;
+import org.jetbrains.anko.AsyncKt;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
+ * Exception performing whole class analysis.
+ */
+@Metadata(mv={1, 1, 15}, bv={1, 0, 3}, k=1, d1={"\u00008\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0004\u0018\u00002\u00020\u00012\u00020\u0002B\u0005\u00a2\u0006\u0002\u0010\u0003J\u0014\u0010\u0004\u001a\u00020\u00052\f\u0010\u0006\u001a\b\u0012\u0004\u0012\u00020\u00050\u0007J\u0014\u0010\b\u001a\u00020\t2\f\u0010\u0006\u001a\b\u0012\u0004\u0012\u00020\u00050\u0007J\u0012\u0010\n\u001a\u00020\u00052\b\u0010\u000b\u001a\u0004\u0018\u00010\fH\u0014J\u001e\u0010\r\u001a\u00020\u00052\u0014\u0010\u000e\u001a\u0010\u0012\u0006\u0012\u0004\u0018\u00010\u0010\u0012\u0004\u0012\u00020\u00050\u000fH\u0016J\u0014\u0010\u0011\u001a\u00020\u00052\f\u0010\u000e\u001a\b\u0012\u0004\u0012\u00020\u00050\u0007J\u0011\u0010\u0012\u001a\u00020\u0005H\u0086@\u00f8\u0001\u0000\u00a2\u0006\u0002\u0010\u0013\u0082\u0002\u0004\n\u0002\b\u0019\u00a8\u0006\u0014"}, d2={"Lguitariz/coroutinesexample/MainActivity;", "Landroidx/appcompat/app/AppCompatActivity;", "Lguitariz/coroutinesexample/navigation/Navigation;", "()V", "asyncMethod", "", "result", "Lkotlin/Function0;", "coroutineMethod", "Lkotlinx/coroutines/Job;", "onCreate", "savedInstanceState", "Landroid/os/Bundle;", "showBlocker", "callback", "Lkotlin/Function1;", "Lguitariz/coroutinesexample/navigation/Blocker;", "someWork", "someWorkAsync", "(Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "app_debug"})
+public final class MainActivity
+extends AppCompatActivity
+implements Navigation {
+    private HashMap _$_findViewCache;
+
+    public void showBlocker(@NotNull Function1<? super Blocker, Unit> callback) {
+        Intrinsics.checkParameterIsNotNull(callback, (String)"callback");
+        BlockerActivity.Companion.show((Context)this, callback);
+    }
+
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.setContentView(2131296285);
+        ((Button)this._$_findCachedViewById(R.id.mainButtonAsync)).setOnClickListener((View.OnClickListener)new /* Unavailable Anonymous Inner Class!! */);
+        ((Button)this._$_findCachedViewById(R.id.mainButtonCoroutine)).setOnClickListener((View.OnClickListener)new /* Unavailable Anonymous Inner Class!! */);
+    }
+
+    public final void someWork(@NotNull Function0<Unit> callback) {
+        Intrinsics.checkParameterIsNotNull(callback, (String)"callback");
+        AsyncKt.doAsync$default((Object)((Object)this), null, (Function1)((Function1)new /* Unavailable Anonymous Inner Class!! */), (int)1, null);
+    }
+
+    public final void asyncMethod(@NotNull Function0<Unit> result) {
+        Intrinsics.checkParameterIsNotNull(result, (String)"result");
+        AsyncKt.doAsync$default((Object)((Object)this), null, (Function1)((Function1)new /* Unavailable Anonymous Inner Class!! */), (int)1, null);
+    }
+
+    @NotNull
+    public final Job coroutineMethod(@NotNull Function0<Unit> result) {
+        Intrinsics.checkParameterIsNotNull(result, (String)"result");
+        return BuildersKt.launch$default((CoroutineScope)((CoroutineScope)GlobalScope.INSTANCE), null, null, (Function2)((Function2)new Function2<CoroutineScope, Continuation<? super Unit>, Object>(this, result, null){
+            private CoroutineScope p$;
+            Object L$0;
+            int label;
+            final /* synthetic */ MainActivity this$0;
+            final /* synthetic */ Function0 $result;
+
+            /*
+             * Unable to fully structure code
+             * Enabled aggressive block sorting
+             * Lifted jumps to return sites
+             */
+            @Nullable
+            public final Object invokeSuspend(@NotNull Object result) {
+                var5_2 = IntrinsicsKt.getCOROUTINE_SUSPENDED();
+                switch (this.label) {
+                    case 0: {
+                        kotlin.ResultKt.throwOnFailure((Object)result);
+                        var2_3 = this.p$;
+                        this.label = 1;
+                        v0 = guitariz.coroutinesexample.navigation.NavigationKt.showBlockerAsync((Navigation)this.this$0, (Continuation)this);
+                        if (v0 == var5_2) {
+                            return var5_2;
+                        }
+                        ** GOTO lbl14
+                    }
+                    case 1: {
+                        kotlin.ResultKt.throwOnFailure((Object)result);
+                        v0 = result;
+lbl14: // 2 sources:
+                        blocker = (Blocker)v0;
+                        this.L$0 = blocker;
+                        this.label = 2;
+                        v1 = this.this$0.someWorkAsync((Continuation<? super Unit>)this);
+                        if (v1 == var5_2) {
+                            return var5_2;
+                        }
+                        ** GOTO lbl25
+                    }
+                    case 2: {
+                        blocker = (Blocker)this.L$0;
+                        kotlin.ResultKt.throwOnFailure((Object)result);
+                        v1 = result;
+lbl25: // 2 sources:
+                        v2 = blocker;
+                        if (v2 == null) ** GOTO lbl39
+                        var4_6 = v2;
+                        this.L$0 = blocker;
+                        this.label = 3;
+                        v3 = guitariz.coroutinesexample.navigation.NavigationKt.closeAsync((Blocker)var4_6, (Continuation)this);
+                        if (v3 == var5_2) {
+                            return var5_2;
+                        }
+                        ** GOTO lbl38
+                    }
+                    case 3: {
+                        blocker = (Blocker)this.L$0;
+                        kotlin.ResultKt.throwOnFailure((Object)result);
+                        v3 = result;
+lbl38: // 2 sources:
+                        (Unit)v3;
+lbl39: // 2 sources:
+                        this.$result.invoke();
+                        return Unit.INSTANCE;
+                    }
+                }
+                throw new java.lang.IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+            }
+            {
+                this.this$0 = mainActivity;
+                this.$result = function0;
+                super(2, continuation);
+            }
+
+            @NotNull
+            public final Continuation<Unit> create(@Nullable Object value, @NotNull Continuation<?> completion) {
+                Intrinsics.checkParameterIsNotNull(completion, (String)"completion");
+                Function2<CoroutineScope, Continuation<? super Unit>, Object> function2 = new /* invalid duplicate definition of identical inner class */;
+                CoroutineScope coroutineScope = function2.p$ = (CoroutineScope)value;
+                return function2;
+            }
+
+            public final Object invoke(Object object, Object object2) {
+                return (this.create(object, (Continuation)object2)).invokeSuspend((Object)Unit.INSTANCE);
+            }
+        }), (int)3, null);
+    }
+
+    @Nullable
+    public final Object someWorkAsync(@NotNull Continuation<? super Unit> $completion) {
+        boolean bl = false;
+        Continuation<? super Unit> continuation = $completion;
+        boolean bl2 = false;
+        SafeContinuation safeContinuation = new SafeContinuation(IntrinsicsKt.intercepted(continuation));
+        Continuation it = (Continuation)safeContinuation;
+        boolean bl3 = false;
+        this.someWork((Function0<Unit>)((Function0)new someWorkAsync.2.1(it)));
+        Object object = safeContinuation.getOrThrow();
+        if (object == IntrinsicsKt.getCOROUTINE_SUSPENDED()) {
+            DebugProbesKt.probeCoroutineSuspended($completion);
+        }
+        return object;
+    }
+
+    public View _$_findCachedViewById(int n) {
+        View view;
+        if (this._$_findViewCache == null) {
+            this._$_findViewCache = new HashMap();
+        }
+        if ((view = (View)this._$_findViewCache.get(n)) == null) {
+            view = this.findViewById(n);
+            this._$_findViewCache.put(n, view);
+        }
+        return view;
+    }
+
+    public void _$_clearFindViewByIdCache() {
+        if (this._$_findViewCache != null) {
+            this._$_findViewCache.clear();
+        }
+    }
+}

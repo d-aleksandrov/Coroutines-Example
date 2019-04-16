@@ -1,0 +1,134 @@
+/*
+ * Decompiled with CFR 0.139.
+ * 
+ * Could not load the following classes:
+ *  guitariz.coroutinesexample.MainActivity
+ *  guitariz.coroutinesexample.MainActivity$coroutineMethod
+ *  guitariz.coroutinesexample.navigation.Blocker
+ *  guitariz.coroutinesexample.navigation.Navigation
+ *  guitariz.coroutinesexample.navigation.NavigationKt
+ *  kotlin.Metadata
+ *  kotlin.ResultKt
+ *  kotlin.Unit
+ *  kotlin.coroutines.Continuation
+ *  kotlin.coroutines.intrinsics.IntrinsicsKt
+ *  kotlin.coroutines.jvm.internal.DebugMetadata
+ *  kotlin.coroutines.jvm.internal.SuspendLambda
+ *  kotlin.jvm.functions.Function0
+ *  kotlin.jvm.functions.Function2
+ *  kotlin.jvm.internal.Intrinsics
+ *  kotlinx.coroutines.CoroutineScope
+ *  org.jetbrains.annotations.NotNull
+ *  org.jetbrains.annotations.Nullable
+ */
+package guitariz.coroutinesexample;
+
+import guitariz.coroutinesexample.MainActivity;
+import guitariz.coroutinesexample.navigation.Blocker;
+import guitariz.coroutinesexample.navigation.Navigation;
+import guitariz.coroutinesexample.navigation.NavigationKt;
+import kotlin.Metadata;
+import kotlin.ResultKt;
+import kotlin.Unit;
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.intrinsics.IntrinsicsKt;
+import kotlin.coroutines.jvm.internal.DebugMetadata;
+import kotlin.coroutines.jvm.internal.SuspendLambda;
+import kotlin.jvm.functions.Function0;
+import kotlin.jvm.functions.Function2;
+import kotlin.jvm.internal.Intrinsics;
+import kotlinx.coroutines.CoroutineScope;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+@DebugMetadata(f="MainActivity.kt", l={40, 41, 42}, i={1, 2}, s={"L$0", "L$0"}, n={"blocker", "blocker"}, m="invokeSuspend", c="guitariz.coroutinesexample.MainActivity$coroutineMethod$1")
+@Metadata(mv={1, 1, 15}, bv={1, 0, 3}, k=3, d1={"\u0000\u000e\n\u0000\n\u0002\u0010\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\u0010\u0000\u001a\u00020\u0001*\u00020\u0002H\u008a@\u00f8\u0001\u0000\u00a2\u0006\u0004\b\u0003\u0010\u0004"}, d2={"<anonymous>", "", "Lkotlinx/coroutines/CoroutineScope;", "invoke", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"})
+static final class MainActivity.coroutineMethod.1
+extends SuspendLambda
+implements Function2<CoroutineScope, Continuation<? super Unit>, Object> {
+    private CoroutineScope p$;
+    Object L$0;
+    int label;
+    final /* synthetic */ MainActivity this$0;
+    final /* synthetic */ Function0 $result;
+
+    /*
+     * Unable to fully structure code
+     * Enabled aggressive block sorting
+     * Lifted jumps to return sites
+     */
+    @Nullable
+    public final Object invokeSuspend(@NotNull Object result) {
+        var5_2 = IntrinsicsKt.getCOROUTINE_SUSPENDED();
+        switch (this.label) {
+            case 0: {
+                ResultKt.throwOnFailure((Object)result);
+                var2_3 = this.p$;
+                this.label = 1;
+                v0 = NavigationKt.showBlockerAsync((Navigation)this.this$0, (Continuation)this);
+                if (v0 == var5_2) {
+                    return var5_2;
+                }
+                ** GOTO lbl14
+            }
+            case 1: {
+                ResultKt.throwOnFailure((Object)result);
+                v0 = result;
+lbl14: // 2 sources:
+                blocker = (Blocker)v0;
+                this.L$0 = blocker;
+                this.label = 2;
+                v1 = this.this$0.someWorkAsync((Continuation)this);
+                if (v1 == var5_2) {
+                    return var5_2;
+                }
+                ** GOTO lbl25
+            }
+            case 2: {
+                blocker = (Blocker)this.L$0;
+                ResultKt.throwOnFailure((Object)result);
+                v1 = result;
+lbl25: // 2 sources:
+                v2 = blocker;
+                if (v2 == null) ** GOTO lbl39
+                var4_6 = v2;
+                this.L$0 = blocker;
+                this.label = 3;
+                v3 = NavigationKt.closeAsync((Blocker)var4_6, (Continuation)this);
+                if (v3 == var5_2) {
+                    return var5_2;
+                }
+                ** GOTO lbl38
+            }
+            case 3: {
+                blocker = (Blocker)this.L$0;
+                ResultKt.throwOnFailure((Object)result);
+                v3 = result;
+lbl38: // 2 sources:
+                (Unit)v3;
+lbl39: // 2 sources:
+                this.$result.invoke();
+                return Unit.INSTANCE;
+            }
+        }
+        throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+    }
+
+    MainActivity.coroutineMethod.1(MainActivity mainActivity, Function0 function0, Continuation continuation) {
+        this.this$0 = mainActivity;
+        this.$result = function0;
+        super(2, continuation);
+    }
+
+    @NotNull
+    public final Continuation<Unit> create(@Nullable Object value, @NotNull Continuation<?> completion) {
+        Intrinsics.checkParameterIsNotNull(completion, (String)"completion");
+        Function2<CoroutineScope, Continuation<? super Unit>, Object> function2 = new /* invalid duplicate definition of identical inner class */;
+        CoroutineScope coroutineScope = function2.p$ = (CoroutineScope)value;
+        return function2;
+    }
+
+    public final Object invoke(Object object, Object object2) {
+        return (this.create(object, (Continuation)object2)).invokeSuspend((Object)Unit.INSTANCE);
+    }
+}

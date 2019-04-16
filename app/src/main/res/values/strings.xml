@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CoroutinesExample</string>
+    <string name="async">Async</string>
+    <string name="coroutine">Coroutine</string>
 </resources>

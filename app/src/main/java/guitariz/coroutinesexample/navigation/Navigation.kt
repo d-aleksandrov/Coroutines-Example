@@ -1,6 +1,7 @@
-package guitariz.coroutinesexample.modules
+package guitariz.coroutinesexample.navigation
 
 import guitariz.coroutinesexample.enqueue
+import guitariz.coroutinesexample.modules.NewsNetwork
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
@@ -8,34 +9,31 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 interface Navigation {
-    fun showBlocker(callback: () -> Unit)
-    fun hideBlocker(callback: () -> Unit)
+    fun showBlocker(callback: (Blocker?) -> Unit)
 }
 
 fun SimpleUseCase(navigation: Navigation,
                   network: NewsNetwork,
-                  fileUrl:String){
-    navigation.showBlocker {
+                  fileUrl: String) {
+    navigation.showBlocker { blocker ->
         network.downloadFile(fileUrl).enqueue { body, throwable ->
-            navigation.hideBlocker {
+            blocker?.close {
                 processResults(body, throwable?.message)
-            }
+            } ?: processResults(body, throwable?.message)
         }
     }
 }
 
-suspend fun Navigation.showBlockerAsync()
-        : Unit = suspendCoroutine { showBlocker { it.resume(Unit) } }
+suspend fun Navigation.showBlockerAsync(): Blocker? = suspendCoroutine { showBlocker(it::resume) }
 
-suspend fun Navigation.hideBlockerAsync()
-        : Unit = suspendCoroutine { hideBlocker { it.resume(Unit) } }
+suspend fun Blocker.closeAsync(): Unit = suspendCoroutine { close { it.resume(Unit) } }
 
 fun SimpleUseCaseAsync(navigation: Navigation,
                        network: NewsNetwork,
-                       fileUrl:String) = GlobalScope.launch {
-    navigation.showBlockerAsync()
+                       fileUrl: String) = GlobalScope.launch {
+    val blocker = navigation.showBlockerAsync()
     val response = network.downloadFileAsync(fileUrl).await()
-    navigation.hideBlockerAsync()
+    blocker?.closeAsync()
     processResults(response.body(), response.errorBody()?.string())
 }
 

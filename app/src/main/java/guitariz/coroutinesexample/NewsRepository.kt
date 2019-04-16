@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 interface NewsCacheListener {
     fun onSuccess(techMessage: String?)
     fun onError(error: String)
-    fun onProgress(percent: Int)
 }
 
 class NewsRepository {

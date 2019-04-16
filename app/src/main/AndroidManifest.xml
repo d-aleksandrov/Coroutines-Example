@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".navigation.BlockerActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.Transparent"/>
     </application>
 
 </manifest>
